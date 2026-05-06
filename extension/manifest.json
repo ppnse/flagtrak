@@ -1,0 +1,10 @@
+{
+  "name": "Flagtrack",
+  "description": "Track CSC laziness",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "CTFtracker.html",
+    "default_icon": "punnoose.png"
+  }
+}
