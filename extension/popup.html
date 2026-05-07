@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlagTrack</title>
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Scanline overlay -->
+  <div class="scanlines"></div>
+  <div class="grid-bg"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-icon">⚑</div>
+      <div class="title-block">
+        <h1 class="title">FlagTrack</h1>
+        <span class="subtitle">CTF INTELLIGENCE SYSTEM</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="stopwatch-block" title="Time on CTF site">
+        <span class="sw-label">SESSION</span>
+        <span class="sw-time" id="stopwatch">00:00:00</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CTF Status Banner -->
+  <section class="status-banner" id="ctf-status-banner">
+    <div class="status-indicator">
+      <span class="pulse-dot" id="status-dot"></span>
+      <span class="status-text" id="status-text">SCANNING...</span>
+    </div>
+    <div class="ctf-name-row">
+      <span class="ctf-label">ACTIVE CTF</span>
+      <span class="ctf-name" id="ctf-name">—</span>
+    </div>
+  </section>
+
+  <!-- Auth Check -->
+  <section class="auth-bar" id="auth-bar">
+    <div class="auth-icon" id="auth-icon">⬡</div>
+    <div class="auth-info">
+      <span class="auth-label">AUTH STATUS</span>
+      <span class="auth-value" id="auth-value">CHECKING...</span>
+    </div>
+    <span class="auth-badge" id="auth-badge">—</span>
+  </section>
+
+  <!-- Progress -->
+  <section class="progress-section">
+    <div class="section-header">
+      <span class="section-title">// PROGRESS</span>
+      <span class="progress-fraction" id="progress-fraction">0 / 0</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+      <div class="progress-bar-glow" id="progress-glow" style="width:0%"></div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-item">
+        <span class="stat-val" id="stat-solved">0</span>
+        <span class="stat-label">SOLVED</span>
+      </div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item">
+        <span class="stat-val" id="stat-unsolved">0</span>
+        <span class="stat-label">REMAINING</span>
+      </div>
+      <div class="stat-divider">|</div>
+      <div class="stat-item">
+        <span class="stat-val" id="stat-points">0</span>
+        <span class="stat-label">POINTS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flag Submission -->
+  <section class="flag-section">
+    <div class="section-header">
+      <span class="section-title">// SUBMIT FLAG</span>
+    </div>
+    <div class="flag-form">
+      <input
+        type="text"
+        class="flag-challenge-input"
+        id="challenge-name"
+        placeholder="Challenge name..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <div class="flag-row">
+        <input
+          type="text"
+          class="flag-input"
+          id="flag-input"
+          placeholder="FLAG{...}"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="submit-btn" id="submit-flag-btn" title="Share flag with club">
+          <span>SHARE</span>
+          <span class="btn-arrow">▶</span>
+        </button>
+      </div>
+      <div class="flag-feedback" id="flag-feedback"></div>
+    </div>
+  </section>
+
+  <!-- Solved Challenges List -->
+  <section class="solved-section">
+    <div class="section-header">
+      <span class="section-title">// CLUB FLAGS</span>
+      <span class="solved-count" id="solved-count">0 flags</span>
+    </div>
+    <div class="solved-list" id="solved-list">
+      <div class="empty-state" id="empty-state">
+        <span class="empty-icon">▒▒▒</span>
+        <span class="empty-text">No flags captured yet</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span class="footer-text">FlagTrack v1.0 · Club CTF Tracker</span>
+    <button class="clear-btn" id="clear-btn" title="Clear all data">RESET</button>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
