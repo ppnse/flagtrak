@@ -2,136 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FlagTrack</title>
+  <title>FlagTrak</title>
   <link rel="stylesheet" href="popup.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- Scanline overlay -->
   <div class="scanlines"></div>
-  <div class="grid-bg"></div>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-left">
-      <div class="logo-icon">⚑</div>
-      <div class="title-block">
-        <h1 class="title">FlagTrack</h1>
-        <span class="subtitle">CTF INTELLIGENCE SYSTEM</span>
+  <!-- ═══════════ LOGIN SCREEN ═══════════ -->
+  <div id="screen-login" class="screen">
+    <div class="login-wrap">
+      <div class="login-logo">⚑</div>
+      <h1 class="login-title">FlagTrak</h1>
+      <p class="login-sub">CLUB CTF TRACKER</p>
+      <div class="login-form">
+        <input id="input-username" type="text"     placeholder="Username" autocomplete="off" spellcheck="false" />
+        <input id="input-password" type="password" placeholder="Password" />
+        <button id="btn-login">LOGIN</button>
+        <div class="login-error" id="login-error"></div>
       </div>
     </div>
-    <div class="header-right">
-      <div class="stopwatch-block" title="Time on CTF site">
-        <span class="sw-label">SESSION</span>
-        <span class="sw-time" id="stopwatch">00:00:00</span>
-      </div>
-    </div>
-  </header>
+  </div>
 
-  <!-- CTF Status Banner -->
-  <section class="status-banner" id="ctf-status-banner">
-    <div class="status-indicator">
+  <!-- ═══════════ MAIN SCREEN ═══════════ -->
+  <div id="screen-main" class="screen hidden">
+
+    <header class="header">
+      <div class="header-left">
+        <span class="logo-icon">⚑</span>
+        <h1 class="title">FlagTrak</h1>
+      </div>
+      <div class="header-right">
+        <div class="session-block">
+          <span class="session-lbl">SESSION</span>
+          <span class="sw-time" id="stopwatch">00:00:00</span>
+        </div>
+        <button class="logout-btn" id="btn-logout" title="Log out">⏏</button>
+      </div>
+    </header>
+
+    <div class="status-bar">
       <span class="pulse-dot" id="status-dot"></span>
-      <span class="status-text" id="status-text">SCANNING...</span>
+      <span class="status-text" id="status-text">NO ACTIVE CTF</span>
+      <span class="ctf-name" id="ctf-name"></span>
     </div>
-    <div class="ctf-name-row">
-      <span class="ctf-label">ACTIVE CTF</span>
-      <span class="ctf-name" id="ctf-name">—</span>
-    </div>
-  </section>
 
-  <!-- Auth Check -->
-  <section class="auth-bar" id="auth-bar">
-    <div class="auth-icon" id="auth-icon">⬡</div>
-    <div class="auth-info">
-      <span class="auth-label">AUTH STATUS</span>
-      <span class="auth-value" id="auth-value">CHECKING...</span>
-    </div>
-    <span class="auth-badge" id="auth-badge">—</span>
-  </section>
+    <section class="progress-section">
+      <div class="user-row">
+        <span class="user-name" id="display-username">—</span>
+        <span class="progress-frac" id="progress-frac">0 / 0 solved</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" id="bar-fill" style="width:0%"></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><span class="stat-n" id="stat-solved">0</span><span class="stat-l">SOLVED</span></div>
+        <div class="stat"><span class="stat-n" id="stat-remain">0</span><span class="stat-l">LEFT</span></div>
+        <div class="stat"><span class="stat-n" id="stat-pts">0</span><span class="stat-l">PTS</span></div>
+      </div>
+    </section>
 
-  <!-- Progress -->
-  <section class="progress-section">
-    <div class="section-header">
-      <span class="section-title">// PROGRESS</span>
-      <span class="progress-fraction" id="progress-fraction">0 / 0</span>
-    </div>
-    <div class="progress-bar-track">
-      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
-      <div class="progress-bar-glow" id="progress-glow" style="width:0%"></div>
-    </div>
-    <div class="progress-stats">
-      <div class="stat-item">
-        <span class="stat-val" id="stat-solved">0</span>
-        <span class="stat-label">SOLVED</span>
-      </div>
-      <div class="stat-divider">|</div>
-      <div class="stat-item">
-        <span class="stat-val" id="stat-unsolved">0</span>
-        <span class="stat-label">REMAINING</span>
-      </div>
-      <div class="stat-divider">|</div>
-      <div class="stat-item">
-        <span class="stat-val" id="stat-points">0</span>
-        <span class="stat-label">POINTS</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Flag Submission -->
-  <section class="flag-section">
-    <div class="section-header">
-      <span class="section-title">// SUBMIT FLAG</span>
-    </div>
-    <div class="flag-form">
-      <input
-        type="text"
-        class="flag-challenge-input"
-        id="challenge-name"
-        placeholder="Challenge name..."
-        autocomplete="off"
-        spellcheck="false"
-      />
+    <section class="submit-section">
+      <div class="sec-label">SUBMIT FLAG</div>
+      <input id="ch-name" type="text" placeholder="Challenge name" autocomplete="off" spellcheck="false" />
       <div class="flag-row">
-        <input
-          type="text"
-          class="flag-input"
-          id="flag-input"
-          placeholder="FLAG{...}"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button class="submit-btn" id="submit-flag-btn" title="Share flag with club">
-          <span>SHARE</span>
-          <span class="btn-arrow">▶</span>
-        </button>
+        <input id="ch-flag" type="text" placeholder="FLAG{...}" autocomplete="off" spellcheck="false" />
+        <button id="btn-submit">SHARE</button>
       </div>
-      <div class="flag-feedback" id="flag-feedback"></div>
-    </div>
-  </section>
+      <div class="feedback" id="feedback"></div>
+    </section>
 
-  <!-- Solved Challenges List -->
-  <section class="solved-section">
-    <div class="section-header">
-      <span class="section-title">// CLUB FLAGS</span>
-      <span class="solved-count" id="solved-count">0 flags</span>
-    </div>
-    <div class="solved-list" id="solved-list">
-      <div class="empty-state" id="empty-state">
-        <span class="empty-icon">▒▒▒</span>
-        <span class="empty-text">No flags captured yet</span>
+    <section class="flags-section">
+      <div class="sec-label-row">
+        <span class="sec-label">CLUB FLAGS</span>
+        <span class="flag-count" id="flag-count">0</span>
       </div>
-    </div>
-  </section>
+      <div class="flags-list" id="flags-list">
+        <div class="empty">No flags yet</div>
+      </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <span class="footer-text">FlagTrack v1.0 · Club CTF Tracker</span>
-    <button class="clear-btn" id="clear-btn" title="Clear all data">RESET</button>
-  </footer>
+    <footer class="footer">
+      <span class="footer-txt">FlagTrak v1.0</span>
+      <button class="reset-btn" id="btn-reset">RESET</button>
+    </footer>
+
+  </div>
 
   <script src="popup.js"></script>
 </body>
